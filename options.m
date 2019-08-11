@@ -24,5 +24,29 @@ function mutationChildren = myfun(parents, options, nvars, FitnessFcn, state, th
   rate = exp(-Generation/(4*G))-1;
   
 end
+%-------------------------------------------------------------------------------------------------
+function y = lower(k)  
+% which -all worksopacefunc
+    if k<(N+1)
+      y=-10;
+    elseif k==(4*N+1)
+      y=6.22e-15;
+    else 
+      y=-20;
+    end
+% which -all worksopacefunc
+end
 
+function y = upper(k)   
+% which -all worksopacefunc
+    if k<(N+1)
+    y=40;
+    elseif k==(4*N+1)
+    y=10;
+    else 
+    y=20;
+    end
+% which -all worksopacefunc
+end
+%---------------------------------------------------------------------------------------
 %[x,fval] = ga(@FitnessFcn,45,[],[],[],[],[],[],[],options);
