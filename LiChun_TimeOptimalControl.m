@@ -114,7 +114,7 @@ function fitness = fit_func(chromosome)
   e_sqr = ((x_f-x(N))^2+(y_f-y(N))^2+(z_f-z(N))^2+(phi_f-phi(N))^2+(theta_f-theta(N))^2+(psi_f-psi(N))^2);
   e_dot_sqr = ((x_dot(N))^2+(y_dot(N))^2+(z_dot(N))^2+(phi_dot(N))^2+(theta_dot(N))^2+(psi_dot(N))^2);
   fitness = 1/(1+e_sqr+e_dot_sqr);
-endfunction
+end
 pop_size = 50;
 
 
@@ -135,18 +135,17 @@ function [child1 , child2] = crossover(parent1 , parent2, Pc)
     child1 = child1;
   else
     child1 = parent1;
-  endif
+  end
   
   R2 = rand();
   if R2 <= Pc
     child2 = child2;
   else
     child2 = parent2;
-  endif
+  end
   % 
   
-endfunction
-%
+  end
 
 % Mutation
 function child = mutation(parent, Pm)
@@ -159,22 +158,27 @@ function child = mutation(parent, Pm)
       child2(k) = parent(k) - (parent(k) - lower_lim(k))*r*(1-gen/G)^b;
     else
       continue;
-    endif
-  endfor
+    end
+    end
     %
   %  selection = rand();
   if(selection>0.5)
     child = child1;
   else 
     child = child2;
-  endif
-  %  
-endfunction 
-%
+  end
+  end
 
 
 % Selectin methods  - Rank Mechanism
 %https://stackoverflow.com/questions/34961489/rank-selection-in-ga
+
+function parent1 = selection(popoulation, Gene_no, pop_size)
+Fitness = population;
+IndLength = Gene_no;
+PopLength = pop_size;
+CurrentPop = population;
+
 NewFitness=sort(Fitness);
         NewPop=round(rand(PopLength,IndLength));
 
@@ -216,16 +220,8 @@ NewFitness=sort(Fitness);
                 SelectedPop(i,1:IndLength)=CurrentPop(1,1:IndLength);
             end
         end
-%
-
-
-
-
-
-
-
-
-
+        parent1 = SelectedPop
+end
 
 % main function
 
@@ -243,7 +239,7 @@ fitness_val = zeros(pop_size,1);
 
 for i = 1:pop_size
   fitness_val(k) = fitness(population(k));
-  endfor
+end
 %
 % maximal generation
   G = 100;
@@ -256,40 +252,9 @@ for gen = 1:G
   % Crossover 
   for pop = 1:pop_size
     new_population(pop:pop+1,:) = crossover(population(pop), population(pop+1), crossover_rate);
-  endfor
+  end
   %
   for pop = 1:pop_size
     new_population(pop) = mutation(population(pop), mutation_rate);
-  endfor
-  
-  
-  
-    
-  
-  
-  endfor
-%
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  end
+  end
